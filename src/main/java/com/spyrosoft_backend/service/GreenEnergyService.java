@@ -2,10 +2,8 @@ package com.spyrosoft_backend.service;
 
 import com.spyrosoft_backend.client.CarbonIntensityClient;
 import com.spyrosoft_backend.exception.NoChargingWindowException;
-import com.spyrosoft_backend.model.DayMix;
-import com.spyrosoft_backend.model.FuelSource;
-import com.spyrosoft_backend.model.GenerationSlot;
-import com.spyrosoft_backend.model.OptimalWindow;
+import com.spyrosoft_backend.model.*;
+import com.spyrosoft_backend.repository.ChargerRepository;
 import com.spyrosoft_backend.time.DayRange;
 import com.spyrosoft_backend.time.LondonDayRange;
 import org.springframework.stereotype.Service;
@@ -27,9 +25,11 @@ public class GreenEnergyService {
 	);
 
 	private final CarbonIntensityClient client;
+	private final ChargerRepository chargerRepository;
 
-	public GreenEnergyService(CarbonIntensityClient client) {
+	public GreenEnergyService(CarbonIntensityClient client, ChargerRepository chargerRepository) {
 		this.client = client;
+		this.chargerRepository = chargerRepository;
 	}
 
 	public List<DayMix> mixForThreeDays() {
@@ -138,5 +138,9 @@ public class GreenEnergyService {
 		}
 
 		return new DayMix(date, slotCount, complete, cleanSum / slotCount, List.copyOf(sources));
+	}
+
+	public List<Charger> getChargers() {
+		return chargerRepository.findAll();
 	}
 }
