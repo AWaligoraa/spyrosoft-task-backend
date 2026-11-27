@@ -3,6 +3,7 @@ package com.spyrosoft_backend.service;
 import com.spyrosoft_backend.exception.ChargerAlreadyBookedException;
 import com.spyrosoft_backend.exception.ChargerNotFoundException;
 import com.spyrosoft_backend.exception.ReservationInThePastException;
+import com.spyrosoft_backend.exception.ReservationNotFoundException;
 import com.spyrosoft_backend.model.Charger;
 import com.spyrosoft_backend.model.CreateReservationRequest;
 import com.spyrosoft_backend.model.Reservation;
@@ -51,5 +52,17 @@ public class ReservationService {
 				request.startsAt(),
 				endsAt
 		));
+	}
+
+	public List<Reservation> getReservations() {
+		return reservationRepository.findAll();
+	}
+
+	@Transactional
+	public Reservation deleteReservation(Long id) {
+		Reservation reservation = reservationRepository.findById(id)
+				.orElseThrow(ReservationNotFoundException::new);
+		reservationRepository.delete(reservation);
+		return reservation;
 	}
 }
