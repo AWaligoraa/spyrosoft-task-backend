@@ -31,12 +31,14 @@ public class GreenEnergyController {
 		return greenEnergyService.mixForThreeDays();
 	}
 
-	@Operation(summary = "Cleanest continuous charging window for today and tomorrow (Europe/London days)")
+	@Operation(summary = "Cleanest continuous charging window for today and tomorrow (Europe/London days). bookable=true skips past times and occupied chargers, optionally in one city")
 	@GetMapping("/charging-window")
 	public OptimalWindow window(
-			@RequestParam @Min(value = 1, message = HOURS_MESSAGE) @Max(value = 6, message = HOURS_MESSAGE) int hours
+			@RequestParam @Min(value = 1, message = HOURS_MESSAGE) @Max(value = 6, message = HOURS_MESSAGE) int hours,
+			@RequestParam(defaultValue = "false") boolean bookable,
+			@RequestParam(required = false) String city
 	) {
-		return greenEnergyService.bestWindow(hours);
+		return greenEnergyService.bestWindow(hours, bookable, city);
 	}
 
 	@Operation(summary = "Chargers available for booking")

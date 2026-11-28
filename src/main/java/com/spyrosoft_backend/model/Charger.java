@@ -14,8 +14,16 @@ public class Charger {
 
 	private String name;
 	private String location;
+	private String city;
 
 	protected Charger() {
+	}
+
+	public Charger(Long id, String name, String location, String city) {
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.city = city;
 	}
 
 	public Long getId() {
@@ -28,5 +36,9 @@ public class Charger {
 
 	public String getLocation() {
 		return location;
+	}
+
+	public String getCity() {
+		return city;
 	}
 }

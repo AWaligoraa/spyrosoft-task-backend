@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GreenEnergyServiceTest {
 
-	private final GreenEnergyService service = new GreenEnergyService(null, null);
+	private final GreenEnergyService service = new GreenEnergyService(null, null, null, null);
 	private final LocalDate date = LocalDate.of(2026, 1, 15);
 
 	@Test
